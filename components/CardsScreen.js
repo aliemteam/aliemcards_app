@@ -1,21 +1,22 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, Text, Button, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
 import CardList from './CardList';
+import Search from './Search';
 
-import cards from '../data/summaries.json';
+import cards from '../data/cards.json';
 
 export default class CardsScreen extends React.Component {
+  static navigationOptions = {
+    title: 'All Cards',
+  };
+
   render() {
     return (
       <SafeAreaView>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor="blue"
-        />
-        <CardList 
-          title="Cards"
-          data={cards.card_summaries}
+        <Search />
+        <CardList
+          data={cards.cards}
         />
       </SafeAreaView>
     );

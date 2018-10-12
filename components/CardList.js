@@ -4,10 +4,18 @@ import { withNavigation } from 'react-navigation';
 
 class CardList extends React.Component {
 
+    handleCallback = (x) => {
+        if(this.props.callback) this.props.callback(x);
+        return null;
+    } 
+
     renderItem = ({item}) => (
         <TouchableHighlight 
             style={styles.listitemcontainer}
-            onPress={() => { this.props.navigation.navigate('Card', { slug: item.slug })}}
+            onPress={() => {
+                this.handleCallback(item.slug);
+                this.props.navigation.navigate('Card', { slug: item.slug })
+            }}
             >
             <Text style={styles.cardinfo}>{item.title}</Text>
         </TouchableHighlight>

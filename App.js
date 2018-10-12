@@ -5,16 +5,8 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 import HomeScreen from './components/HomeScreen';
 import CardScreen from './components/CardScreen';
 import CardsScreen from './components/CardsScreen';
-
-class CategoriesStack extends React.Component {
-  render() {
-    return (
-      <SafeAreaView>
-        <Text>CategoriesStack</Text>
-      </SafeAreaView>
-    );
-  }
-}
+import CategoriesScreen from './components/CategoriesScreen';
+import CategoryScreen from './components/CategoryScreen';
 
 class FavoritesStack extends React.Component {
   render() {
@@ -29,16 +21,31 @@ class FavoritesStack extends React.Component {
 class AboutStack extends React.Component {
   render() {
     return (
-      <SafeAreaView>
+      <View>
         <Text>AboutStack</Text>
-      </SafeAreaView>
+      </View>
     );
   }
 }
 
+const LatestStack = createStackNavigator({
+  Latest: HomeScreen
+});
+
+const CardsStack = createStackNavigator({
+  Cards: CardsScreen
+})
+
+const CategoriesStack = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    Category: CategoryScreen
+  }
+);
+
 const TabStack = createBottomTabNavigator({
-  Latest: HomeScreen,
-  Cards: CardsScreen,
+  Latest: LatestStack,
+  Cards: CardsStack,
   Categories: CategoriesStack,
   Favs: FavoritesStack,
   About: AboutStack
