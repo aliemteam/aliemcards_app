@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, Button, View } from 'react-native';
+import { Text, Button, View, WebView } from 'react-native';
+import marked from 'marked';
 
 import * as cards from '../data/cards.json';
 
@@ -23,9 +24,9 @@ export default class CardScreen extends React.Component {
         const slug = navigation.getParam('slug', 'NO-SLUG');
         const card = this.getCard(slug);
         return (
-            <View>
-            <Text>{card.title}</Text>
-            </View>
+            <WebView 
+              source={{ html: marked(card.body) }}
+            />
         );
     }
   }
