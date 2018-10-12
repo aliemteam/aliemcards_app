@@ -1,39 +1,28 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, Text, Button } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { SafeAreaView, StatusBar, StyleSheet, Text, View, Button } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator, withNavigation } from 'react-navigation';
 
-class HomeScreen extends React.Component {
-  render() {
-    return (
-      <SafeAreaView>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor="blue"
-        />
-        <Text>HomeStack</Text>
-        <Button
-          title="Go to Card Screen"
-          onPress={() => this.props.navigation.navigate('Card')}
-        />
-      </SafeAreaView>
-    );
-  }
-}
+import HomeScreen from './components/HomeScreen';
 
 class CardScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Card Screen',
+    headerLeft: (
+      <Button
+        title="Done"
+        onPress={ () => { navigation.goBack() }}
+      />
+    )
+  });
+
   render() {
     return (
-      <SafeAreaView>
+      <View>
         <Text>CardScreen</Text>
-      </SafeAreaView>
+      </View>
     );
   }
 }
-
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-  Card: CardScreen
-});
 
 class CardsStack extends React.Component {
   render() {
@@ -75,13 +64,25 @@ class AboutStack extends React.Component {
   }
 }
 
-export default createBottomTabNavigator({
-  Latest: HomeStack,
+const TabStack = createBottomTabNavigator({
+  Latest: HomeScreen,
   Cards: CardsStack,
   Categories: CategoriesStack,
   Favs: FavoritesStack,
   About: AboutStack
 });
+
+const HomeStack = createStackNavigator(
+  {
+    Home: TabStack,
+    Card: CardScreen
+  },
+  {
+    mode: 'modal'
+  }  
+);
+
+export default HomeStack;
 
 // Demo code
 class App extends React.Component {
