@@ -1,38 +1,10 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, Text, View, Button } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator, withNavigation } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 import HomeScreen from './components/HomeScreen';
-
-class CardScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Card Screen',
-    headerLeft: (
-      <Button
-        title="Done"
-        onPress={ () => { navigation.goBack() }}
-      />
-    )
-  });
-
-  render() {
-    return (
-      <View>
-        <Text>CardScreen</Text>
-      </View>
-    );
-  }
-}
-
-class CardsStack extends React.Component {
-  render() {
-    return (
-      <SafeAreaView>
-        <Text>CardsStack</Text>
-      </SafeAreaView>
-    );
-  }
-}
+import CardScreen from './components/CardScreen';
+import CardsScreen from './components/CardsScreen';
 
 class CategoriesStack extends React.Component {
   render() {
@@ -66,7 +38,7 @@ class AboutStack extends React.Component {
 
 const TabStack = createBottomTabNavigator({
   Latest: HomeScreen,
-  Cards: CardsStack,
+  Cards: CardsScreen,
   Categories: CategoriesStack,
   Favs: FavoritesStack,
   About: AboutStack

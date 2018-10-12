@@ -1,10 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, FlatList } from 'react-native';
+import { View, StyleSheet, Text, TouchableHighlight, FlatList } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
-export default class CardList extends React.Component {
-  
+class CardList extends React.Component {
+
     renderItem = ({item}) => (
-        <Text>{item.title}</Text>
+        <TouchableHighlight 
+            style={styles.listitemcontainer}
+            onPress={() => { this.props.navigation.navigate('Card', { slug: item.slug })}}
+            >
+            <Text style={styles.cardinfo}>{item.title}</Text>
+        </TouchableHighlight>
     );
   
     render() {
@@ -21,6 +27,8 @@ export default class CardList extends React.Component {
     }
 }
 
+export default withNavigation(CardList);
+
 const styles = StyleSheet.create({
     title: {
         fontSize: 20,
@@ -33,4 +41,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    listitemcontainer: {
+        padding: 10,
+        backgroundColor: 'white'
+    },
+    cardinfo: {
+        fontSize: 16,
+    }
   });

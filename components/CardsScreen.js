@@ -3,9 +3,9 @@ import { SafeAreaView, StatusBar, Text, Button, FlatList } from 'react-native';
 
 import CardList from './CardList';
 
-import recent from '../data/recent.json';
+import cards from '../data/summaries.json';
 
-export default class HomeScreen extends React.Component {
+export default class CardsScreen extends React.Component {
   render() {
     return (
       <SafeAreaView>
@@ -14,12 +14,8 @@ export default class HomeScreen extends React.Component {
           backgroundColor="blue"
         />
         <CardList 
-          title="Newest Cards"
-          data={recent.created}
-        />
-        <CardList 
-          title="Updated Cards"
-          data={recent.updates}
+          title="Cards"
+          data={cards.card_summaries}
         />
       </SafeAreaView>
     );
