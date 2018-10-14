@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Content, Header, List, ListItem, Item, Input, Icon, Text } from 'native-base';
+import { Button, Container, Content, Header, List, ListItem, Item, Input, Icon, Text } from 'native-base';
+import { withNavigation } from 'react-navigation';
 import CardList from './CardList-NB';
 import Fuse from 'fuse.js';
 
@@ -17,7 +18,7 @@ const fuse = new Fuse(cards.cards, {
     keys: [{ name: 'title', weight: 0.8 }, { name: 'body', weight: 0.2 }],
   });
 
-export default class SearchContainer extends React.Component {
+class SearchScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,16 +35,20 @@ export default class SearchContainer extends React.Component {
     render() {
         return (
         <Container>
-            <Header searchBar>
+            <Header searchBar rounded>
                 <Item>
                     <Icon name="ios-search" />
                     <Input 
+                        autoFocus
                         placeholder="Search all cards..." 
                         clearButtonMode='always' 
                         onChangeText={this.handleSearch}
                         value={this.state.query}
                     />
                 </Item>
+                <Button transparent onPress={() => this.props.navigation.goBack()}>
+                    <Text>Cancel</Text>
+                </Button>
             </Header>
             <Content>
                 <CardList cards={this.state.results} />
@@ -53,3 +58,5 @@ export default class SearchContainer extends React.Component {
         );
     }
 }
+
+export default withNavigation(SearchScreen);

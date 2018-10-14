@@ -7,7 +7,7 @@ class CardList extends React.Component {
         <ListItem 
             button 
             noIndent 
-            onPress={() => { this.props.navigation.navigate('Card', { slug: item.slug })}}>
+            onPress={() => { this.props.navigation.navigate('CardScreen', { slug: item.slug })}}>
             <Text>{item.title}</Text>
         </ListItem>
     );

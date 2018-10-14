@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 import HomeScreen from './components/HomeScreen';
@@ -7,6 +7,7 @@ import CardScreen from './components/CardScreen';
 import CardsScreen from './components/CardsScreen';
 import CategoriesScreen from './components/CategoriesScreen';
 import CategoryScreen from './components/CategoryScreen';
+import SearchScreen from './components/SearchScreen';
 
 class FavoritesStack extends React.Component {
   render() {
@@ -43,18 +44,29 @@ const TabStack = createBottomTabNavigator({
   About: AboutStack
 });
 
-const HomeStack = createStackNavigator(
+const SearchStack = createStackNavigator(
   {
-    Home: TabStack,
-    Card: CardScreen
+    TabStack: TabStack,
+    SearchScreen: SearchScreen
+  },
+  {
+    initialRouteName: "TabStack",
+    headerMode: 'none'
+  }
+);
+
+const CardStack = createStackNavigator(
+  {
+    SearchStack: SearchStack,
+    CardScreen: CardScreen
   },
   {
     headerMode: 'none',
     mode: 'modal'
   }
-);
+)
 
-export default HomeStack;
+export default CardStack;
 
 
 // Demo code
