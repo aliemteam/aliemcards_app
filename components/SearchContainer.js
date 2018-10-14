@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Content, Header, List, ListItem, Item, Input, Icon, Text } from 'native-base';
+import CardList from './CardList-NB';
 import Fuse from 'fuse.js';
 
 import cards from '../data/cards.json';
@@ -30,35 +31,23 @@ export default class SearchContainer extends React.Component {
         this.setState({ query: text, results });
     }
 
-    getListItem = (item) => (
-    <ListItem 
-        button 
-        noIndent 
-        onPress={() => { console.log(item.title); this.props.navigation.navigate('Card', { slug: item.slug })}}>
-        <Text>{item.title}</Text>
-    </ListItem>
-    );
-
     render() {
         return (
         <Container>
             <Header searchBar>
-            <Item>
-                <Icon name="ios-search" />
-                <Input 
-                    placeholder="Search all cards..." 
-                    clearButtonMode='always' 
-                    onChangeText={this.handleSearch}
-                    value={this.state.query}
-                />
-            </Item>
+                <Item>
+                    <Icon name="ios-search" />
+                    <Input 
+                        placeholder="Search all cards..." 
+                        clearButtonMode='always' 
+                        onChangeText={this.handleSearch}
+                        value={this.state.query}
+                    />
+                </Item>
             </Header>
             <Content>
-            <List
-                dataArray={this.state.results}
-                renderRow={this.getListItem}
-            />
-            { this.props.children }
+                <CardList cards={this.state.results} />
+                { this.props.children }
             </Content>
         </Container>
         );
