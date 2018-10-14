@@ -1,33 +1,29 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, Text, Button, FlatList } from 'react-native';
+import { H1, List, ListItem, Text } from 'native-base';
 
-import CardList from './CardList';
-import Search from './Search';
-
+import SearchContainer from './SearchContainer';
 import recent from '../data/recent.json';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Latest Cards',
-  };
+
+  getListItem = (item) => (
+    <ListItem 
+      button 
+      noIndent 
+      onPress={() => { console.log(item.title); this.props.navigation.navigate('Card', { slug: item.slug })}}>
+      <Text>{item.title}</Text>
+    </ListItem>
+  );
 
   render() {
     return (
-      <SafeAreaView>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor="blue"
-        />
-        <Search />
-        <CardList 
-          title="Newest Cards"
-          data={recent.created}
-        />
-        <CardList 
-          title="Updated Cards"
-          data={recent.updates}
-        />
-      </SafeAreaView>
+      <SearchContainer>
+          <H1>Newest Cards</H1>
+          <List
+            dataArray={recent.created}
+            renderRow={this.getListItem}
+          />
+      </SearchContainer>
     );
   }
 }
