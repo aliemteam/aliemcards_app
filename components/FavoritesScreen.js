@@ -1,10 +1,8 @@
 import React from 'react';
-import {Text} from 'native-base';
-
-import MainHeaderContainer from './MainHeaderContainer';
+import {Text, View} from 'native-base';
 
 export default () => (
-  <MainHeaderContainer title='Favorites'>
+  <View>
     <Text>Favorites Screen</Text>
-  </MainHeaderContainer>
+  </View>
 );

@@ -26,7 +26,7 @@ class CardList extends React.Component {
         <View>
             <Text style={styles.title}>{this.props.title}</Text>
             <FlatList 
-            data={this.props.data}
+            data={this.props.cards}
             keyExtractor={(item) => item.slug} //each list item needs unique key
             renderItem={this.renderItem}
             />

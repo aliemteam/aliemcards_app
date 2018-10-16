@@ -1,19 +1,17 @@
 import React from 'react';
-import { H1, Icon, List, ListItem, Text } from 'native-base';
+import { Text, View } from 'react-native';
 
-import CardList from './CardList-NB';
-import MainHeaderContainer from './MainHeaderContainer';
-import TabIcon from './TabIcon';
+import CardList from './CardList';
 import recent from '../data/recent.json';
 
 export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <MainHeaderContainer title="ALiEM Cards">
-          <H1>Newest Cards</H1>
+      <View>
+          <Text>Newest Cards</Text>
           <CardList cards={recent.created} />
-      </MainHeaderContainer>
+      </View>
     );
   }
 }

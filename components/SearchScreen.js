@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button, Container, Content, Header, List, ListItem, Item, Input, Icon, Text } from 'native-base';
+import { Button, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import CardList from './CardList-NB';
 import Fuse from 'fuse.js';
 
+import CardList from './CardList';
 import cards from '../data/cards.json';
 
 const fuse = new Fuse(cards.cards, {
@@ -18,7 +18,7 @@ const fuse = new Fuse(cards.cards, {
     keys: [{ name: 'title', weight: 0.8 }, { name: 'body', weight: 0.2 }],
   });
 
-class SearchScreen extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,37 +26,40 @@ class SearchScreen extends React.Component {
             results: []
         };
     }
-
-    handleSearch = (text) => { 
-        const results = fuse.search((text)).slice(0,8);
-        this.setState({ query: text, results });
-    }
-
     render() {
+
+        handleSearch = (text) => { 
+            const results = fuse.search((text)).slice(0,8);
+            this.setState({ query: text, results });
+        }
+
         return (
-        <Container>
-            <Header searchBar rounded>
-                <Item>
-                    <Icon name="ios-search" />
-                    <Input 
-                        autoFocus
-                        placeholder="Search all cards..." 
-                        clearButtonMode='always' 
-                        onChangeText={this.handleSearch}
-                        value={this.state.query}
-                    />
-                </Item>
-                <Button transparent onPress={() => this.props.navigation.goBack()}>
-                    <Text>Cancel</Text>
-                </Button>
-            </Header>
-            <Content>
+        <SafeAreaView style={{ padding: 10 }}>
+            <View style={{flex: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                <TextInput
+                    style={{flex: 1, height: 40, borderColor: 'black', margin: 10, borderWidth: 1, padding: 10 }}
+                    placeholder="Search cards"
+                    clearButtonMode='always'
+                    autoFocus
+                    onChangeText={handleSearch}
+                    value={this.state.query}
+                />
+                <Button style={{ flex: 1 }} title="Done" onPress={()=> { this.props.navigation.goBack() }} />
+            </View>
+            { this.state.results.length > 0 && (
                 <CardList cards={this.state.results} />
-                { this.props.children }
-            </Content>
-        </Container>
+            )}
+        </SafeAreaView>
         );
     }
 }
 
-export default withNavigation(SearchScreen);
+export default withNavigation(Search);
+
+const styles = StyleSheet.create({
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'red'
+    }
+  });

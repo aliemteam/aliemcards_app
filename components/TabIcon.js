@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon } from 'native-base';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 export default (name) => {
     return ({ focused, horizontal, tintColor}) =>
-    <Icon name={name} active type="SimpleLineIcons" style={{ fontSize: 20, color: tintColor }}  />;            
+    <SimpleLineIcons name={name} active color={tintColor} size={20}  />;            
 }

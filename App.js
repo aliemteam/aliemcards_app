@@ -10,12 +10,7 @@ import TabBarFooter from './components/TabBarFooter';
 const SearchStack = createStackNavigator(
   {
     TabStack: TabBarFooter,
-    SearchScreen: {
-      screen: SearchScreen,
-      navigationOptions: {
-        title: 'Search'
-      }
-    }
+    SearchScreen: SearchScreen
   },
   {
     headerMode: 'none'
