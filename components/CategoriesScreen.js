@@ -1,56 +1,30 @@
 import React from 'react';
-import { Text, FlatList, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { List, ListItem, Text } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import MainHeaderContainer from './MainHeaderContainer';
 
-import Search from './Search';
+import cats from '../data/categories.json';
 
-import categories from '../data/categories.json';
-
-class CategoriesList extends React.Component {
-
-  static navigationOptions = {
-    title: 'Categories',
-  };
-
-  renderItem = ({item}) => (
-    <TouchableHighlight 
-        style={styles.listitemcontainer}
-        onPress={() => {
-            this.props.navigation.navigate('Category', { slug: item.slug })
-        }}
-        >
-        <Text style={styles.cardinfo}>{item.name}</Text>
-    </TouchableHighlight>
-  );
-
-  render() {
-    return (
-      <View>
-        <Search />
-        <Text style={styles.title}>Categories</Text>
-        <FlatList 
-        data={categories.categories}
-        keyExtractor={(item) => item.slug} //each list item needs unique key
-        renderItem={this.renderItem}
-        />
-      </View>
+class CategoriesScreen extends React.Component {
+    getListItem = (item) => (
+        <ListItem 
+            button
+            noIndent
+            onPress={() => { this.props.navigation.navigate('CategoryScreen', { slug: item.slug })}}>
+            <Text>{item.name}</Text>
+        </ListItem>
     );
-  }
+
+    render() {
+        return (
+          <MainHeaderContainer>
+            <List
+                dataArray={cats.categories}
+                renderRow={this.getListItem}
+            />
+          </MainHeaderContainer>
+        );
+    }
 }
 
-export default withNavigation(CategoriesList);
-
-const styles = StyleSheet.create({
-  title: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: 'red'
-  },
-  listitemcontainer: {
-      padding: 10,
-      backgroundColor: 'white'
-  },
-  cardinfo: {
-      fontSize: 16,
-  }
-});
+export default withNavigation(CategoriesScreen);

@@ -1,56 +1,23 @@
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 
-import HomeScreen from './components/HomeScreen';
 import CardScreen from './components/CardScreen';
-import CardsScreen from './components/CardsScreen';
-import CategoriesScreen from './components/CategoriesScreen';
-import CategoryScreen from './components/CategoryScreen';
 import SearchScreen from './components/SearchScreen';
+import TabBarFooter from './components/TabBarFooter';
 
-class FavoritesStack extends React.Component {
-  render() {
-    return (
-      <SafeAreaView>
-        <Text>FavoritesStack</Text>
-      </SafeAreaView>
-    );
-  }
-}
-
-class AboutStack extends React.Component {
-  render() {
-    return (
-      <View>
-        <Text>AboutStack</Text>
-      </View>
-    );
-  }
-}
-
-const CategoriesStack = createStackNavigator(
-  {
-    Categories: CategoriesScreen,
-    Category: CategoryScreen
-  }
-);
-
-const TabStack = createBottomTabNavigator({
-  Latest: HomeScreen,
-  Cards: CardsScreen,
-  Categories: CategoriesStack,
-  Favs: FavoritesStack,
-  About: AboutStack
-});
 
 const SearchStack = createStackNavigator(
   {
-    TabStack: TabStack,
-    SearchScreen: SearchScreen
+    TabStack: TabBarFooter,
+    SearchScreen: {
+      screen: SearchScreen,
+      navigationOptions: {
+        title: 'Search'
+      }
+    }
   },
   {
-    initialRouteName: "TabStack",
     headerMode: 'none'
   }
 );
@@ -61,8 +28,8 @@ const CardStack = createStackNavigator(
     CardScreen: CardScreen
   },
   {
-    headerMode: 'none',
-    mode: 'modal'
+    mode: 'modal',
+    headerMode: 'none'
   }
 )
 

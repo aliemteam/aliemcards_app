@@ -14,7 +14,7 @@ class CardList extends React.Component {
             style={styles.listitemcontainer}
             onPress={() => {
                 this.handleCallback(item.slug);
-                this.props.navigation.navigate('Card', { slug: item.slug })
+                this.props.navigation.navigate('CardScreen', { slug: item.slug })
             }}
             >
             <Text style={styles.cardinfo}>{item.title}</Text>
