@@ -3,6 +3,8 @@ import { Alert, AsyncStorage, StyleSheet, TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation';
 import { FontAwesome as Icon } from '@expo/vector-icons';
 
+import Colors from './colors';
+
 const MakeFavButton = (props) => 
     <TouchableOpacity onPress={props.onPress}>
         <Icon name="star-o" size={18} style={styles.favbutton} />
@@ -10,7 +12,7 @@ const MakeFavButton = (props) =>
 
 const DropFavButton = (props) => 
     <TouchableOpacity onPress={props.onPress}>
-        <Icon name="star" size={18} style={styles.favbutton} />
+        <Icon name="star" size={18} style={styles.dropbutton} />
     </TouchableOpacity>
 
 const AlertConfirm = (card, cb) => {
@@ -98,8 +100,13 @@ class FavButton extends React.Component {
 export default withNavigation(FavButton);
 
 const styles = StyleSheet.create({
-favbutton: {
-    margin: 10,
-},
+    favbutton: {
+        margin: 10,
+        color: 'white'
+    },
+    dropbutton: {
+        margin: 10,
+        color: 'gold'
+    }
 });
   

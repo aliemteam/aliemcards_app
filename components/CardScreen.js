@@ -12,6 +12,7 @@ import { Feather as Icon } from '@expo/vector-icons';
 
 import FavoriteButton from './FavoriteButton';
 import MarkdownView from './MarkdownView';
+import Colors from './colors';
 
 import * as cards from '../data/cards.json';
 
@@ -33,12 +34,16 @@ const share = (card) => {
 
 const ShareButton = (props) =>
   <TouchableOpacity onPress={() => share(props.card)}>
-    <Icon name="share" size={20} style={{ marginRight: 10}} />
+    <Icon name="share" size={20} style={{ color: 'white', marginRight: 10}} />
   </TouchableOpacity>
 
 
 class CardScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: Colors.primary
+      },
+      headerTint: 'white',
       headerRight: (
         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                 <ShareButton card={navigation.getParam('card')} />
@@ -48,6 +53,7 @@ class CardScreen extends React.Component {
       headerLeft: () => (
         <View>
           <Button
+            color='white'
             title="Done"
             onPress={ () => { navigation.goBack() }}
           />

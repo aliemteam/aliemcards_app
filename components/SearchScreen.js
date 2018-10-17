@@ -1,10 +1,12 @@
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Fuse from 'fuse.js';
 
 import CardList from './CardList';
+import Colors from './colors';
 import cards from '../data/cards.json';
+
 
 const fuse = new Fuse(cards.cards, {
     caseSensitive: false,
@@ -19,6 +21,12 @@ const fuse = new Fuse(cards.cards, {
   });
 
 class Search extends React.Component {
+    static navigationOptions = ({ navigation }) => ({
+        headerStyle: {
+          backgroundColor: Colors.primary
+        }
+    });
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -26,6 +34,7 @@ class Search extends React.Component {
             results: []
         };
     }
+    
     render() {
 
         handleSearch = (text) => { 
@@ -34,22 +43,22 @@ class Search extends React.Component {
         }
 
         return (
-        <SafeAreaView style={{ padding: 10 }}>
-            <View style={{flex: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+        <View> 
+            <View style={styles.searchheader}>
                 <TextInput
-                    style={{flex: 1, height: 40, borderColor: 'black', margin: 10, borderWidth: 1, padding: 10 }}
+                    style={styles.input}
                     placeholder="Search cards"
                     clearButtonMode='always'
                     autoFocus
                     onChangeText={handleSearch}
                     value={this.state.query}
                 />
-                <Button style={{ flex: 1 }} title="Done" onPress={()=> { this.props.navigation.goBack() }} />
+                <Button style={{ flex: 1 }} color='white' title="Done" onPress={()=> { this.props.navigation.goBack() }} />
             </View>
             { this.state.results.length > 0 && (
                 <CardList cards={this.state.results} />
             )}
-        </SafeAreaView>
+        </View>
         );
     }
 }
@@ -61,5 +70,24 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: 'red'
+    },
+    searchheader: {
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        backgroundColor: Colors.primary,
+        paddingTop: 18
+    },
+    input: {
+        flex: 1,
+        height: 40,
+        borderColor: Colors.primaryShade,
+        backgroundColor: 'white',
+        color: Colors.primary,
+        margin: 10,
+        borderWidth: 0,
+        padding: 5,
+        borderRadius: 5
     }
   });
