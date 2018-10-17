@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, View, TouchableOpacity } from 'react-native';
+import { 
+  ActionSheetIOS,
+  Button,
+  Clipboard,
+  Platform,
+  ToastAndroid,
+  TouchableOpacity,
+  View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { Feather as Icon } from '@expo/vector-icons';
 
@@ -8,8 +15,24 @@ import MarkdownView from './MarkdownView';
 
 import * as cards from '../data/cards.json';
 
+const share = (card) => {
+  if (Platform.OS === 'ios') {
+    ActionSheetIOS.showShareActionSheetWithOptions(
+      {
+        url: `https://www.aliemcards.com/cards/${card.slug}`,
+        message: `Check out this ALiEM Cards on ${card.title}`
+      },
+      () => alert('An error occurred trying to share'),
+      () => console.log('share success')
+    );
+  } else {
+    Clipboard.setString(`https://www.aliemcards.com/cards/${card.slug}`);
+    ToastAndroid.show('Card web address copied to clipboard', ToastAndroid.SHORT);
+  }
+}
+
 const ShareButton = (props) =>
-  <TouchableOpacity>
+  <TouchableOpacity onPress={() => share(props.card)}>
     <Icon name="share" size={20} style={{ marginRight: 10}} />
   </TouchableOpacity>
 
@@ -18,7 +41,7 @@ class CardScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
       headerRight: (
         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                <ShareButton />
+                <ShareButton card={navigation.getParam('card')} />
                 <FavoriteButton />
               </View>
       ),

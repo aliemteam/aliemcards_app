@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, Button, View } from 'react-native';
+import { AsyncStorage, View } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 
 import CardList from './CardList';
@@ -26,8 +26,7 @@ class FavoritesScreen extends React.Component {
   convertAndSaveFavs = async () => {
     const favs = await this.getFavs();
     if (favs) {
-      const flat_favs = Object.keys(favs).map(key => ({ title: favs[key].title, slug: favs[key].slug }));
-      console.log(flat_favs);
+      const flat_favs = Object.keys(favs).sort().map(key => ({ title: favs[key].title, slug: favs[key].slug }));
       this.setState({ favs: flat_favs });
     }
   }
@@ -44,7 +43,7 @@ class FavoritesScreen extends React.Component {
     this.convertAndSaveFavs();
   }
 
-  componentDidUpdate (previousProps) {
+  async componentDidUpdate (previousProps) {
     if (!previousProps.isFocused && this.props.isFocused) {
       this.convertAndSaveFavs();
     }
@@ -53,7 +52,6 @@ class FavoritesScreen extends React.Component {
   render() {
     return(
       <View>
-        <Button title='clear all' onPress={() => this.deleteAllFavs()} />
         <CardList cards={this.state.favs} />
       </View>
       

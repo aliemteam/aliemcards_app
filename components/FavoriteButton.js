@@ -13,6 +13,18 @@ const DropFavButton = (props) =>
         <Icon name="star" size={18} style={styles.favbutton} />
     </TouchableOpacity>
 
+const AlertConfirm = (card, cb) => {
+    Alert.alert(
+        'Remove Favorite?',
+        `Remove ${card.title} from Favorites?`,
+        [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'OK', onPress: () => cb()},
+        ],
+        { cancelable: false }
+    )
+}
+
 class FavButton extends React.Component {
     constructor(props) {
         super(props);
@@ -74,7 +86,11 @@ class FavButton extends React.Component {
         if (!this.state.isfav) {
             return <MakeFavButton onPress={() => this.setFav(card_data)} />
         } else {
-            return <DropFavButton onPress={() => this.dropFav(card_data)} />
+            return (
+                <DropFavButton 
+                    onPress={() => AlertConfirm(card_data, () => { this.dropFav(card_data)})}
+                />
+            );
         }
     }
 }
