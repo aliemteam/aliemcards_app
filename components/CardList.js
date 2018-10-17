@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableHighlight, FlatList } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 class CardList extends React.Component {
@@ -10,15 +10,15 @@ class CardList extends React.Component {
     } 
 
     renderItem = ({item}) => (
-        <TouchableHighlight 
+        <TouchableOpacity 
             style={styles.listitemcontainer}
             onPress={() => {
                 this.handleCallback(item.slug);
-                this.props.navigation.navigate('CardScreen', { slug: item.slug })
+                this.props.navigation.navigate('CardScreen', { card: { slug: item.slug, title: item.title }});
             }}
             >
             <Text style={styles.cardinfo}>{item.title}</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
     );
   
     render() {

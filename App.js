@@ -19,12 +19,16 @@ const SearchStack = createStackNavigator(
 
 const CardStack = createStackNavigator(
   {
-    SearchStack: SearchStack,
+    SearchStack: {
+      screen: SearchStack,
+      navigationOptions: {
+        header: null
+      }
+    },
     CardScreen: CardScreen
   },
   {
-    mode: 'modal',
-    headerMode: 'none'
+    mode: 'modal'
   }
 )
 

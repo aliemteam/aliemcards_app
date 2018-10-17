@@ -1,19 +1,34 @@
 import React from 'react';
-//import { Text, Button, View, WebView } from 'react-native';
-import { Container, Content, H1, Header, Left, List, ListItem, Item, Input, Icon, Button, Text } from 'native-base';
-import { View, WebView } from 'react-native';
+import { Button, View, TouchableOpacity } from 'react-native';
+import { withNavigation } from 'react-navigation';
+import { Feather as Icon } from '@expo/vector-icons';
 
+import FavoriteButton from './FavoriteButton';
 import MarkdownView from './MarkdownView';
 
 import * as cards from '../data/cards.json';
 
-export default class CardScreen extends React.Component {
+const ShareButton = (props) =>
+  <TouchableOpacity>
+    <Icon name="share" size={20} style={{ marginRight: 10}} />
+  </TouchableOpacity>
+
+
+class CardScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
-      headerLeft: (
-        <Button
-          title="Done"
-          onPress={ () => { navigation.goBack() }}
-        />
+      headerRight: (
+        <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <ShareButton />
+                <FavoriteButton />
+              </View>
+      ),
+      headerLeft: () => (
+        <View>
+          <Button
+            title="Done"
+            onPress={ () => { navigation.goBack() }}
+          />
+        </View>
       )
     });
 
@@ -24,27 +39,12 @@ export default class CardScreen extends React.Component {
   
     render() {
         const { navigation } = this.props;
-        const slug = navigation.getParam('slug', 'NO-SLUG');
+        const slug = navigation.getParam('card', 'NO-CARD').slug;
         const card = this.getCard(slug);
         return (
-
-            <Container>
-            <Header>
-              <Left>
-              <Button transparent onPress={ () => { navigation.goBack() }}>
-                <Text>Done</Text>
-              </Button>
-              </Left>
-            </Header>
-            {/* 
-              Content is based on ScrollView which affects nested WebView
-              https://github.com/GeekyAnts/NativeBase/issues/107 
-            */}
-            <Content contentContainerStyle={{ flex: 1 }}>
-              <MarkdownView content={card.body} />
-            </Content>
-          </Container>
+            <MarkdownView content={card.body} />              
         );
     }
   }
   
+  export default withNavigation(CardScreen);
