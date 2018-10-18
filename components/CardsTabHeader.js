@@ -1,5 +1,4 @@
-import React from "react"
-import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from "react-navigation";
+import { createMaterialTopTabNavigator } from "react-navigation";
 
 import CardsAlphabeticalScreen from './CardsAlphabeticalScreen';
 import CardsByCatScreen from './CardsByCatScreen';
