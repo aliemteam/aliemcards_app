@@ -6,15 +6,17 @@ import {
   Platform,
   ToastAndroid,
   TouchableOpacity,
-  View } from 'react-native';
+  View,
+  WebView
+} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { Feather as Icon } from '@expo/vector-icons';
+import marked from 'marked';
 
 import FavoriteButton from './FavoriteButton';
-import MarkdownView from './MarkdownView';
 import Colors from './colors';
 
-import * as cards from '../data/cards.json';
+import { getCard } from './CardLibrary'
 
 const share = (card) => {
   if (Platform.OS === 'ios') {
@@ -34,7 +36,7 @@ const share = (card) => {
 
 const ShareButton = (props) =>
   <TouchableOpacity onPress={() => share(props.card)}>
-    <Icon name="share" size={20} style={{ color: 'white', marginRight: 10}} />
+    <Icon name="share" size={20} style={{ color: Colors.primaryLight, marginRight: 10}} />
   </TouchableOpacity>
 
 
@@ -47,13 +49,13 @@ class CardScreen extends React.Component {
       headerRight: (
         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                 <ShareButton card={navigation.getParam('card')} />
-                <FavoriteButton />
+                <FavoriteButton cardsummary={navigation.getParam('card')} />
               </View>
       ),
       headerLeft: () => (
         <View>
           <Button
-            color='white'
+            color={Colors.primaryLight}
             title="Done"
             onPress={ () => { navigation.goBack() }}
           />
@@ -61,18 +63,31 @@ class CardScreen extends React.Component {
       )
     });
 
-    getCard = (slug) => {
-      const match = cards.cards.filter(card => card.slug == slug)[0];
-      return match;
+    constructor(props) {
+      super(props);
+      this.state = {
+        card: {}
+      }
+    }
+
+    componentDidMount() {
+      this.setState({ card: getCard(this.props.navigation.getParam('card').slug)})
     }
   
     render() {
-        const { navigation } = this.props;
-        const slug = navigation.getParam('card', 'NO-CARD').slug;
-        const card = this.getCard(slug);
+      if (this.state.card.body) {
         return (
-            <MarkdownView content={card.body} />              
+          <View style={{ flex: 1, backgroundColor: Colors.primary }}>
+            <WebView 
+              style={{ overflow: 'hidden', borderRadius: 5 }}
+              useWebKit={true}
+              source={{html: marked(this.state.card.body) }} 
+              scalesPageToFit={false}
+            />
+          </View>            
         );
+      }
+      return null;
     }
   }
   

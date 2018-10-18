@@ -20,7 +20,7 @@ const tabSetup = (screen, title, icon_name) => {
         home: {
             screen,
             navigationOptions: ({ navigation }) => ({
-                headerTitle: 'ALiEMCards',
+                headerTitle: title,
                 headerLeft: (<SearchButton navigation={navigation} />),
                 headerTintColor: 'white',
                 headerStyle: {
@@ -40,19 +40,18 @@ const tabSetup = (screen, title, icon_name) => {
 const TabConfig = {
     tabBarOptions: {
         inactiveBackgroundColor: Colors.primaryShade,
+        inactiveTintColor: Colors.primaryLight,
         activeTintColor: 'white',
         activeBackgroundColor: Colors.primary,
-        inactiveTintColor: Colors.lightGray,
+        
     }
 }
 
 const TabBarFooter = createBottomTabNavigator({
-    Latest: tabSetup(HomeScreen, 'Latest', 'home'),
+    Latest: tabSetup(HomeScreen, 'ALiEMCards', 'home'),
     Favorites: tabSetup(FavoritesScreen, 'Favorites', 'star'),
     Cards: tabSetup(CardsScreen, 'Cards', 'list'),
     About: tabSetup(AboutScreen, 'About', 'question')
 }, TabConfig);
-
-
 
 export default TabBarFooter;

@@ -1,17 +1,19 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 
-import CardList from './CardList';
-import recent from '../data/recent.json';
+import CardListSection from './CardListSection';
+import { getRecent } from './CardLibrary';
 
 export default class HomeScreen extends React.Component {
 
   render() {
+    const recent = getRecent();
+    const sections = [
+      {title: 'Newest Cards', data: recent.created},
+      {title: 'Updated Cards', data: recent.updates}
+    ];
+
     return (
-      <View>
-          <Text>Newest Cards</Text>
-          <CardList cards={recent.created} />
-      </View>
+      <CardListSection sections={sections} />
     );
   }
 }

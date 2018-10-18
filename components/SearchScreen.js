@@ -1,14 +1,13 @@
 import React from 'react';
-import { Button, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Fuse from 'fuse.js';
 
 import CardList from './CardList';
+import { getCards } from './CardLibrary';
 import Colors from './colors';
-import cards from '../data/cards.json';
 
-
-const fuse = new Fuse(cards.cards, {
+const fuse = new Fuse(getCards(), {
     caseSensitive: false,
     shouldSort: true,
     tokenize: true,
@@ -23,7 +22,7 @@ const fuse = new Fuse(cards.cards, {
 class Search extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         headerStyle: {
-          backgroundColor: Colors.primary
+          backgroundColor: Colors.darkGray
         }
     });
     
