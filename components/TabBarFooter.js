@@ -1,10 +1,11 @@
 import React from "react"
-import { createStackNavigator, createBottomTabNavigator } from "react-navigation";
-import { TouchableOpacity } from "react-native"
+import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from "react-navigation";
+import { Text, TouchableOpacity, View } from "react-native"
 import { SimpleLineIcons as Icon } from '@expo/vector-icons';
 
 import HomeScreen from './HomeScreen';
-import CardsScreen from './CardsScreen';
+import CardsAlphabeticalScreen from './CardsAlphabeticalScreen';
+import CardsByCatScreen from './CardsByCatScreen';
 import FavoritesScreen from './FavoritesScreen';
 import AboutScreen from './AboutScreen';
 import TabIcon from "./TabIcon";
@@ -47,10 +48,32 @@ const TabConfig = {
     }
 }
 
+const CardsTabHeader = createMaterialTopTabNavigator(
+    {
+        AllCards: {
+            screen: CardsAlphabeticalScreen,
+            navigationOptions: { tabBarLabel: 'Alphabetical' }
+    },
+        CardsByCat: {
+            screen: CardsByCatScreen,
+            navigationOptions: { tabBarLabel: 'By Category'}
+        }
+    }, {
+        tabBarOptions: {
+            activeTintColor: 'white',
+            inactiveTintColor: Colors.primaryLight,
+            style: { backgroundColor: Colors.primaryShade },
+            tabStyle: {  },
+            labelStyle: { fontWeight: 'bold' },
+            indicatorStyle: { backgroundColor: Colors.primaryLight }
+        }
+    }
+);
+
 const TabBarFooter = createBottomTabNavigator({
     Latest: tabSetup(HomeScreen, 'ALiEMCards', 'home'),
     Favorites: tabSetup(FavoritesScreen, 'Favorites', 'star'),
-    Cards: tabSetup(CardsScreen, 'Cards', 'list'),
+    Cards: tabSetup(CardsTabHeader, 'Cards', 'list'),
     About: tabSetup(AboutScreen, 'About', 'question')
 }, TabConfig);
 
