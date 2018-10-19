@@ -1,5 +1,5 @@
 import React from "react"
-import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from "react-navigation";
+import { createStackNavigator, createBottomTabNavigator } from "react-navigation";
 import { TouchableOpacity } from "react-native"
 import { SimpleLineIcons as Icon } from '@expo/vector-icons';
 
@@ -15,7 +15,8 @@ const SearchButton = (props) =>
         <Icon name="magnifier" size={20} style={{ color: 'white', margin: 10 }} />
     </TouchableOpacity>
 
-const tabSetup = (screen, title, icon_name) => {
+const tabSetup = (screen, title, icon_name, hideHeader) => {
+    const config = hideHeader ? { headerMode: 'none' } : {};
     const stack = createStackNavigator({
         home: {
             screen,
@@ -28,7 +29,7 @@ const tabSetup = (screen, title, icon_name) => {
                 }
             })
         },
-    });
+    }, config);
 
     stack.navigationOptions = {
         tabBarIcon: TabIcon(icon_name)

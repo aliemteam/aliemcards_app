@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { Button, Keyboard, StyleSheet, TextInput, ScrollView, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Fuse from 'fuse.js';
 
@@ -36,28 +36,27 @@ class Search extends React.Component {
     
     render() {
 
-        handleSearch = (text) => { 
-            const results = fuse.search((text)).slice(0,8);
-            this.setState({ query: text, results });
+        handleSearch = (query) => { 
+            const results = fuse.search((query)).slice(0,8);
+            this.setState({ query, results });
         }
 
         return (
-        <View> 
-            <View style={styles.searchheader}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Search cards"
-                    clearButtonMode='always'
-                    autoFocus
-                    onChangeText={handleSearch}
-                    value={this.state.query}
-                />
-                <Button style={{ flex: 1 }} color='white' title="Done" onPress={()=> { this.props.navigation.goBack() }} />
-            </View>
-            { this.state.results.length > 0 && (
+            <ScrollView keyboardShouldPersistTaps='always'>
+                <View style={styles.searchheader}>
+                    <TextInput
+                        ref='searchbox'
+                        style={styles.input}
+                        placeholder="Search cards"
+                        clearButtonMode='always'
+                        autoFocus
+                        onChangeText={handleSearch}
+                        value={this.state.query}
+                    />
+                    <Button style={{ flex: 1 }} color='white' title="Done" onPress={()=> { this.props.navigation.goBack() }} />
+                </View>
                 <CardList cards={this.state.results} />
-            )}
-        </View>
+            </ScrollView>
         );
     }
 }
