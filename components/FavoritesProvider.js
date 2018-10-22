@@ -9,8 +9,7 @@ class FavsProvider extends React.Component {
         favs: () => this.favsAsArray(),
         setFav: (summary) => { this.setFav(summary) },
         dropFav: (slug) => { this.dropFav(slug) },
-        isFav: (slug) => this.isFav(slug),
-        test: () => this.favsAsArray()
+        isFav: (slug) => this.isFav(slug)
     }
 
     async getFavs() {
@@ -18,7 +17,6 @@ class FavsProvider extends React.Component {
             const value = await AsyncStorage.getItem('FAVORITES');
             if (value !== null) {
                 const fullfavs = JSON.parse(value);
-                const favs = 
                 this.setState({ fullfavs });
             }
         } catch (error) {

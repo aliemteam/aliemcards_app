@@ -7,13 +7,17 @@ import HomeScreen from '../screens/HomeScreen';
 import CardsSortScreen from '../screens/CardsSortScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import AboutScreen from '../screens/AboutScreen';
-import TabIcon from "./TabIcon";
 import Colors from "./colors";
 
 const SearchButton = (props) =>
     <TouchableOpacity onPress={() => { props.navigation.navigate('SearchScreen')}}>
         <Icon name="magnifier" size={20} style={{ color: 'white', margin: 10 }} />
     </TouchableOpacity>
+
+const TabIcon = (name) => {
+    return ({ focused, horizontal, tintColor}) =>
+    <Icon name={name} active color={tintColor} size={20}  />;            
+}
 
 const tabSetup = (screen, title, icon_name, hideHeader) => {
     const config = hideHeader ? { headerMode: 'none' } : {};

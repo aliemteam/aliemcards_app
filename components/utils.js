@@ -1,4 +1,3 @@
-import React from 'react';
 import { Analytics, PageHit } from 'expo-analytics';
 
 export const constants = {
