@@ -1,11 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { Font } from 'expo';
 
-import CardScreen from './components/CardScreen';
+import CardScreen from './screens/CardScreen';
 import { FavsProvider } from './components/FavoritesProvider';
-import SearchScreen from './components/SearchScreen';
+import SearchScreen from './screens/SearchScreen';
 import TabBarFooter from './components/TabBarFooter';
 
 

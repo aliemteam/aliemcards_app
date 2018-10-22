@@ -13,10 +13,11 @@ import { withNavigation } from 'react-navigation';
 import { Feather as Icon } from '@expo/vector-icons';
 import marked from 'marked';
 
-import FavoriteButton from './FavoriteButton';
-import Colors from './colors';
+import FavoriteButton from '../components/FavoriteButton';
+import Colors from '../components/colors';
+import { withAnalytics, analyzeThis } from '../components/utils';  
 
-import { getCard } from './CardLibrary'
+import { getCard } from '../components/CardLibrary'
 
 const css = `
 body {
@@ -124,6 +125,7 @@ tfoot p {
 `
 
 const share = (card) => {
+  analyzeThis(`ShareButton:${card.slug}`);
   if (Platform.OS === 'ios') {
     ActionSheetIOS.showShareActionSheetWithOptions(
       {
@@ -144,6 +146,8 @@ const ShareButton = (props) =>
     <Icon name="share" size={20} style={{ color: Colors.primaryLight, marginRight: 10}} />
   </TouchableOpacity>
 
+
+let cardName;
 
 class CardScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -170,13 +174,16 @@ class CardScreen extends React.Component {
 
     constructor(props) {
       super(props);
+      cardName = this.props.navigation.getParam('card').slug;
       this.state = {
         card: {}
       }
     }
 
     componentDidMount() {
-      this.setState({ card: getCard(this.props.navigation.getParam('card').slug)})
+      const slug = this.props.navigation.getParam('card').slug;
+      this.setState({ card: getCard(slug)});
+      analyzeThis(`CardScreen:${slug}`);
     }
   
     render() {

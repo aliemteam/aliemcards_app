@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, Keyboard, StyleSheet, TextInput, ScrollView, View } from 'react-native';
+import { Button, StyleSheet, TextInput, ScrollView, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Fuse from 'fuse.js';
 
-import CardList from './CardList';
-import { getCards } from './CardLibrary';
-import Colors from './colors';
+import { analyzeThis } from '../components/utils';
+import CardList from '../components/CardList';
+import { getCards } from '../components/CardLibrary';
+import Colors from '../components/colors';
 
 const fuse = new Fuse(getCards(), {
     caseSensitive: false,
@@ -32,6 +33,10 @@ class Search extends React.Component {
             query: '',
             results: []
         };
+    }
+
+    componentDidMount() {
+        analyzeThis('SearchScreen');
     }
     
     render() {
