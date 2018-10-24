@@ -16,7 +16,7 @@ import marked from 'marked';
 import FavoriteButton from '../components/FavoriteButton';
 import Colors from '../components/colors';
 import {css as CSS} from '../components/css';
-import { analyzeThis } from '../components/utils';  
+import { analyzeThis, regex } from '../components/utils';  
 import { getCard } from '../components/CardLibrary'
 
 const share = (card) => {
@@ -73,8 +73,7 @@ class CardScreen extends React.Component {
     }
 
     onShouldStartLoadWithRequest(e) {
-      const regex = /\/cards\/[a-zA-Z0-9_-]+/g;
-      if (e.url && e.url.match(regex)) {
+      if (e.url && e.url.match(regex.internallinks)) {
         const slug = e.url.split('/').pop();
         this.refs['WebView'].stopLoading();
         this.props.navigation.push('CardScreen', { card: getCard(slug)});

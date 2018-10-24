@@ -15,12 +15,12 @@ class About extends React.Component {
   render() {
     return (
       <View>
-        <FlatList 
+        {/* <FlatList 
           horizontal
           data={cats}
           keyExtractor={(item) => item.slug} //each list item needs unique key
           renderItem={({item, index}) => <Text>{item.name}</Text>}   
-        />
+        /> */}
         <Text>About Screen</Text>
         {/* <Button title="clear storage" onPress={() => AsyncStorage.removeItem('FAVORITES', console.log('removed favorites'))} />\
         <Button title="show storage" onPress={() => AsyncStorage.getItem('FAVORITES').then(fav => { console.log(fav)})} /> */}

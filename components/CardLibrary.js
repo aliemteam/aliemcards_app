@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native';
+
 import * as cardsjson from '../data/cards.json';
 import * as summariesjson from '../data/cardsummaries.json';
 import * as recent from '../data/recent.json';
