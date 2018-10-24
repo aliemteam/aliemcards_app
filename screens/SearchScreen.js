@@ -41,7 +41,8 @@ class Search extends React.Component {
     
     render() {
 
-        handleSearch = (query) => { 
+        handleSearch = (query) => {
+            analyzeThis(`Search:${query}`);
             const results = fuse.search((query)).slice(0,8);
             this.setState({ query, results });
         }
