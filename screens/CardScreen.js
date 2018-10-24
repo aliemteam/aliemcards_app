@@ -17,10 +17,7 @@ import FavoriteButton from '../components/FavoriteButton';
 import Colors from '../components/colors';
 import {css as CSS} from '../components/css';
 import { analyzeThis } from '../components/utils';  
-
 import { getCard } from '../components/CardLibrary'
-
-
 
 const share = (card) => {
   analyzeThis(`ShareButton:${card.slug}`);
@@ -43,9 +40,6 @@ const ShareButton = (props) =>
   <TouchableOpacity onPress={() => share(props.card)}>
     <Icon name="share" size={20} style={{ color: Colors.primaryLight, marginRight: 10}} />
   </TouchableOpacity>
-
-
-let cardName;
 
 class CardScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -105,7 +99,8 @@ class CardScreen extends React.Component {
           : new Date(card.created).toLocaleDateString('en-US', {
               timeZone: 'UTC',
             });
-        const content = `
+        const url = this.props.navigation.getParam('url', null);
+        const content = url ? url : `
           <style>${CSS}</style>
           <h1>${card.title}</h1>
           <div class="card__meta">
