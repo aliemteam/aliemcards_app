@@ -8,6 +8,7 @@ import CardListSection from '../components/CardListSection';
 import CardsSortModal from '../components/CardsSortModal';
 import { getSummaries } from '../components/CardLibrary';
 import Colors from '../components/colors';
+import { analyzeThis } from '../components/utils';
 
 const FilterButton = (props) =>
   <TouchableOpacity onPress={props.onPress} style={{ backgroundColor: Colors.lightGray }}>
@@ -31,6 +32,10 @@ class CardsSortScreen extends React.Component {
 
   selectCategory(cat) {
     this.setState({ selectedCategory: cat, modalVisible: !this.state.modalVisible });
+  }
+
+  componentDidMount() {
+    analyzeThis('CardsSortScreen');
   }
 
   render() {
