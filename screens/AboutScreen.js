@@ -20,7 +20,7 @@ class About extends React.Component {
           source={require('../assets/logoHeader.png')}
           style={{ width: null, height: 125, resizeMode: 'contain' }}
         />
-        <Text style={styles.version}>Version 0.1.0</Text>
+        <Text style={styles.version}>Version 0.1.1</Text>
         <Text style={styles.header}>About</Text>
         <Text style={styles.p}>Originally named, Paucis Verbis (PV) cards, these cards were developed as a bedside teaching tool used by
       Academic Life in Emergency Medicine (ALiEM) Founder and Editor-in-chief Michelle Lin. They
