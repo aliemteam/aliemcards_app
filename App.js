@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { Font } from 'expo';
 
@@ -56,6 +57,9 @@ class App extends React.Component {
   render() {
     return (     
       <FavsProvider>
+        <StatusBar 
+          barStyle='light-content'
+        />
         { this.state.fontLoaded && (<CardStack />)}
       </FavsProvider>
     );
