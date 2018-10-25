@@ -2,7 +2,7 @@
   "expo": {
     "name": "aliemcards_app",
     "description": "ALiEM Cards App",
-    "slug": "aliemcards_app",
+    "slug": "ALiEM Cards",
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": ["ios", "android"],
