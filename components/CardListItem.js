@@ -6,7 +6,10 @@ import Colors from './colors';
 
 const renderItem = (props) =>
     <TouchableOpacity 
-        onPress={() => {props.navigation.navigate('CardScreen', { card: props.card });}}
+        onPress={() => {
+          if (props.callback) props.callback();
+          props.navigation.navigate('CardScreen', { card: props.card });
+        }}
     >
     <View style={styles.sectionItemView}>
         <Text style={styles.sectionItem} key={props.index} >{props.card.title}</Text>

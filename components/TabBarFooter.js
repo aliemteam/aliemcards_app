@@ -38,17 +38,15 @@ const tabSetup = (screen, title, icon_name, hideHeader) => {
     stack.navigationOptions = {
         tabBarIcon: TabIcon(icon_name)
     }
-
     return stack;
 }
 
 const TabConfig = {
     tabBarOptions: {
         inactiveBackgroundColor: Colors.primaryShade,
-        inactiveTintColor: Colors.primaryLight,
+        inactiveTintColor: Colors.lightGray,
         activeTintColor: 'white',
         activeBackgroundColor: Colors.primary,
-        
     }
 }
 

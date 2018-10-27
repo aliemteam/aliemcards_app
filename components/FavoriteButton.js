@@ -57,7 +57,7 @@ export default FavButton;
 const styles = StyleSheet.create({
     favbutton: {
         margin: 10,
-        color: Colors.primaryLight
+        color: 'white'
     },
     dropbutton: {
         margin: 10,

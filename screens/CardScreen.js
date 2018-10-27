@@ -38,7 +38,7 @@ const share = (card) => {
 
 const ShareButton = (props) =>
   <TouchableOpacity onPress={() => share(props.card)}>
-    <Icon name="share" size={20} style={{ color: Colors.primaryLight, marginRight: 10}} />
+    <Icon name="share" size={20} style={{ color: 'white', marginRight: 10}} />
   </TouchableOpacity>
 
 class CardScreen extends React.Component {
@@ -56,7 +56,7 @@ class CardScreen extends React.Component {
       headerLeft: () => (
         <View>
           <Button
-            color={Colors.primaryLight}
+            color='white'
             title="Done"
             onPress={ () => { navigation.goBack() }}
           />

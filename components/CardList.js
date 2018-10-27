@@ -8,7 +8,7 @@ const CardList = (props) =>
         keyboardShouldPersistTaps='always'
         data={props.cards}
         keyExtractor={(item) => item.slug} //each list item needs unique key
-        renderItem={({item, index}) => <CardListItem card={item} index={index} />}    
+        renderItem={({item, index}) => <CardListItem card={item} index={index} callback={props.callback} />}    
     />
 
 export default CardList;

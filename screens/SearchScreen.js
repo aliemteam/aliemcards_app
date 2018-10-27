@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, TextInput, ScrollView, View } from 'react-native';
+import { AsyncStorage, Button, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Fuse from 'fuse.js';
 
@@ -20,35 +20,73 @@ const fuse = new Fuse(getCards(), {
     keys: [{ name: 'title', weight: 0.8 }, { name: 'body', weight: 0.2 }],
   });
 
-class Search extends React.Component {
-    static navigationOptions = ({ navigation }) => ({
-        headerStyle: {
-          backgroundColor: Colors.darkGray
-        }
-    });
-    
+
+
+class Search extends React.Component {    
     constructor(props) {
         super(props);
         this.state = {
-            query: '',
-            results: []
+            results: [],
         };
     }
 
-    componentDidMount() {
+    async saveSearch(searches) {
+        try {
+            await AsyncStorage.setItem('SEARCHES', JSON.stringify(searches));
+            return true;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async addSearch() {
+        const recent = this.state.recent;
+        if (recent && recent.find((term) => term === this.state.query)) return;
+        recent.splice(0, 0, this.state.query);
+        const sliced = recent.slice(0,8);
+        console.log('Saving...', sliced);
+        const saved = await this.saveSearch(sliced);
+        if (saved) {
+            this.setState({ recent });
+        }
+    }
+
+    async getRecent() {
+        try {
+            const recentSearchesString = await AsyncStorage.getItem('SEARCHES');
+            const recentSearches = JSON.parse(recentSearchesString);
+            const recent = (recentSearches) ? recentSearches : [];
+            this.setState({ recent });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async componentDidMount() {
         analyzeThis('SearchScreen');
+        this.getRecent();
     }
     
     render() {
 
         handleSearch = (query) => {
-            analyzeThis(`Search:${query}`);
             const results = fuse.search((query)).slice(0,8);
             this.setState({ query, results });
         }
 
+        const RecentItem = (props) =>
+            <TouchableOpacity
+                onPress={() => handleSearch(props.term)}
+            >
+                <Text style={styles.recentItem}>{props.term}</Text>
+            </TouchableOpacity>
+        const RecentSearches = (props) =>
+            <View style={styles.recent}>
+                <Text style={styles.header}>Recent Searches:</Text>
+                { this.state.recent.map((term, index) => <RecentItem key={index} term={term} />) }
+            </View>
         return (
-            <ScrollView keyboardShouldPersistTaps='always'>
+            <View>
                 <View style={styles.searchheader}>
                     <TextInput
                         ref='searchbox'
@@ -61,8 +99,14 @@ class Search extends React.Component {
                     />
                     <Button style={{ flex: 1 }} color='white' title="Done" onPress={()=> { this.props.navigation.goBack() }} />
                 </View>
-                <CardList cards={this.state.results} />
-            </ScrollView>
+                <ScrollView keyboardShouldPersistTaps='always'>
+                    { this.state.results.length > 0 && (<CardList cards={this.state.results} callback={this.addSearch.bind(this) }/>)}
+                    { this.state.results.length == 0 
+                        && this.state.recent 
+                        && (<RecentSearches />)
+                    }
+                </ScrollView>
+            </View>
         );
     }
 }
@@ -84,7 +128,7 @@ const styles = StyleSheet.create({
         paddingTop: 18
     },
     input: {
-        flex: 1,
+        flex: 5,
         height: 40,
         borderColor: Colors.primaryShade,
         backgroundColor: 'white',
@@ -93,5 +137,22 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         padding: 5,
         borderRadius: 5
+    },
+    recent: {
+        flex: 1,
+        alignItems: 'center'
+
+    },
+    header: {
+        fontFamily: 'open-sans-regular',
+        fontSize: 20,
+        color: Colors.primary,
+        padding: 20
+    },
+    recentItem: {
+        fontFamily: 'open-sans-bold',
+        fontSize: 16,
+        padding: 10,
+        color: Colors.darkGray
     }
   });
