@@ -47,7 +47,7 @@ class Search extends React.Component {
         console.log('Saving...', sliced);
         const saved = await this.saveSearch(sliced);
         if (saved) {
-            this.setState({ recent });
+            this.setState({ recent: sliced });
         }
     }
 
@@ -62,29 +62,30 @@ class Search extends React.Component {
         }
     }
 
+    handleSearch = (query) => {
+        const results = fuse.search((query)).slice(0,8);
+        this.setState({ query, results });
+    }
+
     async componentDidMount() {
         analyzeThis('SearchScreen');
-        this.getRecent();
+        if (!this.state.recent) this.getRecent();
     }
     
     render() {
 
-        handleSearch = (query) => {
-            const results = fuse.search((query)).slice(0,8);
-            this.setState({ query, results });
-        }
-
         const RecentItem = (props) =>
             <TouchableOpacity
-                onPress={() => handleSearch(props.term)}
+                onPress={() => this.handleSearch(props.term)}
             >
                 <Text style={styles.recentItem}>{props.term}</Text>
             </TouchableOpacity>
         const RecentSearches = (props) =>
             <View style={styles.recent}>
                 <Text style={styles.header}>Recent Searches:</Text>
-                { this.state.recent.map((term, index) => <RecentItem key={index} term={term} />) }
+                { props.searches.map((term) => <RecentItem key={term} term={term} />) }
             </View>
+
         return (
             <View>
                 <View style={styles.searchheader}>
@@ -94,7 +95,7 @@ class Search extends React.Component {
                         placeholder="Search cards"
                         clearButtonMode='always'
                         autoFocus
-                        onChangeText={handleSearch}
+                        onChangeText={this.handleSearch}
                         value={this.state.query}
                     />
                     <Button style={{ flex: 1 }} color='white' title="Done" onPress={()=> { this.props.navigation.goBack() }} />
@@ -103,7 +104,7 @@ class Search extends React.Component {
                     { this.state.results.length > 0 && (<CardList cards={this.state.results} callback={this.addSearch.bind(this) }/>)}
                     { this.state.results.length == 0 
                         && this.state.recent 
-                        && (<RecentSearches />)
+                        && (<RecentSearches searches={this.state.recent} />)
                     }
                 </ScrollView>
             </View>
