@@ -49,9 +49,9 @@ class CardScreen extends React.Component {
       headerTint: 'white',
       headerRight: (
         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                <ShareButton card={navigation.getParam('card')} />
-                <FavoriteButton cardsummary={navigation.getParam('card')} />
-              </View>
+          <ShareButton card={navigation.getParam('card')} />
+          <FavoriteButton cardsummary={navigation.getParam('card')} />
+        </View>
       ),
       headerLeft: () => (
         <View>
@@ -72,6 +72,7 @@ class CardScreen extends React.Component {
       }
     }
 
+    // load ALiEM Card URL by navigation within the app
     onShouldStartLoadWithRequest(e) {
       if (e.url && e.url.match(regex.internallinks)) {
         const slug = e.url.split('/').pop();

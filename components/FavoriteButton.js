@@ -3,7 +3,6 @@ import { Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome as Icon } from '@expo/vector-icons';
 
 import { FavsContext } from './FavoritesProvider';
-import Colors from './colors';
 
 const MakeFavButton = (props) => 
     <TouchableOpacity onPress={props.onPress}>
