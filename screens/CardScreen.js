@@ -125,7 +125,7 @@ class CardScreen extends React.Component {
               originWhitelist={['*']}
               ref="WebView"
               style={{ overflow: 'hidden', borderRadius: 5 }}
-              source={{html: content}}
+              source={{html: content, baseUrl: './'}}
               scalesPageToFit={false}
               onShouldStartLoadWithRequest={(e) => this.onShouldStartLoadWithRequest(e)}
               onNavigationStateChange = {(e) => this.onShouldStartLoadWithRequest(e)}

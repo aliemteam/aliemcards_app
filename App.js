@@ -67,7 +67,7 @@ class App extends React.Component {
     }
     return (     
       <FavsProvider>
-        <StatusBar barStyle='light-content'/>
+        <StatusBar barStyle='light-content' />
         <CardStack screenProps={PicAssets} />
       </FavsProvider>
     );
