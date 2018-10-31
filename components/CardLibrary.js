@@ -1,6 +1,3 @@
-import PicAssets from './PicAssets';
-console.log(PicAssets['dental-infections_image-1.png']);
-
 import * as cardsjson from '../data/cards.json';
 import * as summariesjson from '../data/cardsummaries.json';
 import * as recent from '../data/recent.json';

@@ -3,6 +3,7 @@ import {Image, Text, View, ScrollView, StyleSheet} from 'react-native';
 
 import { analyzeThis } from '../components/utils';
 import Colors from '../components/colors';
+import * as config from '../app.json';
 
 class About extends React.Component {
   
@@ -20,7 +21,7 @@ class About extends React.Component {
           source={require('../assets/logoHeader.png')}
           style={{ width: null, height: 125, resizeMode: 'contain' }}
         />
-        <Text style={styles.version}>Version 0.1.1</Text>
+        <Text style={styles.version}>Version {config.expo.version}</Text>
         <Text style={styles.header}>About</Text>
         <Text style={styles.p}>Originally named, Paucis Verbis (PV) cards, these cards were developed as a bedside teaching tool used by
       Academic Life in Emergency Medicine (ALiEM) Founder and Editor-in-chief Michelle Lin. They
