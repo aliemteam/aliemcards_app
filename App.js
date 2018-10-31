@@ -1,10 +1,11 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { Font } from 'expo';
+import { AppLoading, Font } from 'expo';
 
 import CardScreen from './screens/CardScreen';
 import { FavsProvider } from './components/FavoritesProvider';
+import PicAssets from './components/PicAssets';
 import SearchScreen from './screens/SearchScreen';
 import TabBarFooter from './components/TabBarFooter';
 
@@ -40,27 +41,34 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fontLoaded: false,
+      appLoaded: false,
     };
   }
 
-  async componentDidMount() {
-    await Font.loadAsync({
+  async cacheResourcesAsync() {
+    const fontPromise = Font.loadAsync({
       'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
       'open-sans-semi': require('./assets/fonts/OpenSans-SemiBold.ttf'),
       'open-sans-regular': require('./assets/fonts/OpenSans-Regular.ttf'),
     });
-
-    this.setState({ fontLoaded: true });
+    const picsPromises = Object.keys(PicAssets).map(key => PicAssets[key].downloadAsync());
+    return Promise.all([fontPromise, ...picsPromises]);
   }
 
   render() {
+    if (!this.state.appLoaded) {
+      return (
+        <AppLoading
+          startAsync={this.cacheResourcesAsync}
+          onFinish={() => this.setState({ appLoaded: true })}
+          onError={console.warn}
+        />
+      );
+    }
     return (     
       <FavsProvider>
-        <StatusBar 
-          barStyle='light-content'
-        />
-        { this.state.fontLoaded && (<CardStack />)}
+        <StatusBar barStyle='light-content'/>
+        <CardStack screenProps={PicAssets} />
       </FavsProvider>
     );
   }

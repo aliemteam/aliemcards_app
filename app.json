@@ -18,8 +18,12 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "**/*",
+      "data/media/**/*"
     ],
+    "packagerOpts": {
+      "assetExts": ["png"]
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.aliem.aliemcardsapp"

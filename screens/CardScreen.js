@@ -9,7 +9,6 @@ import {
   View,
   WebView
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import { Feather as Icon } from '@expo/vector-icons';
 import marked from 'marked';
 
@@ -72,7 +71,7 @@ class CardScreen extends React.Component {
       }
     }
 
-    // load ALiEM Card URL by navigation within the app
+    // navigate links to ALiEM Cards within the app
     onShouldStartLoadWithRequest(e) {
       if (e.url && e.url.match(regex.internallinks)) {
         const slug = e.url.split('/').pop();
@@ -92,14 +91,19 @@ class CardScreen extends React.Component {
     render() {
       if (this.state.card.body) {
         const card = this.state.card;
-        const lastUpdate = card.updates
-          ? new Date(card.updates[0]).toLocaleDateString('en-US', {
+        // created vs updated
+        const lastUpdate = card.updates ? 
+          new Date(card.updates[0]).toLocaleDateString('en-US', {
               timeZone: 'UTC',
-            })
-          : new Date(card.created).toLocaleDateString('en-US', {
+          }) : 
+          new Date(card.created).toLocaleDateString('en-US', {
               timeZone: 'UTC',
-            });
+          });
+        // replace remote image source with local URI
+        const card_body_image_fix = this.state.card.body.replace(regex.aliemimages, (match, p1) => this.props.screenProps[p1].localUri);
+        // if external link was clicked, display that in WebView, otherwise display a card
         const url = this.props.navigation.getParam('url', null);
+
         const content = url ? url : `
           <style>${CSS}</style>
           <h1>${card.title}</h1>
@@ -112,12 +116,13 @@ class CardScreen extends React.Component {
               <strong>Updated:</strong> ${lastUpdate}
             </div>
           </div>
-          <div class='card__content'>${marked(this.state.card.body)}</div>
+          <div class='card__content'>${marked(card_body_image_fix)}</div>
         `
 
         return (
           <View style={{ flex: 1, backgroundColor: Colors.primary }}>
             <WebView
+              originWhitelist={['*']}
               ref="WebView"
               style={{ overflow: 'hidden', borderRadius: 5 }}
               source={{html: content}}
@@ -132,4 +137,4 @@ class CardScreen extends React.Component {
     }
   }
   
-  export default withNavigation(CardScreen);
+  export default CardScreen;

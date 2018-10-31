@@ -12,6 +12,6 @@ export function analyzeThis(log) {
 }
 
 export const regex = {
-    aliemimages: /https:\/\/aliemcards\.netlify\.com(\/media\/[\w-]+\.(?:png|jpg|jpeg|gif))/g,
+    aliemimages: /https?:\/\/aliemcards\.netlify\.com\/media\/([\w-]+\.(?:png|jpg|jpeg|gif))/g,
     internallinks: /\/cards\/[a-zA-Z0-9_-]+/g,
 }
