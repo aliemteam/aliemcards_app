@@ -1,5 +1,14 @@
 import React from 'react';
-import { AsyncStorage, Button, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView, View } from 'react-native';
+import { AsyncStorage,
+    Button,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    ScrollView,
+    View,
+    Platform
+} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Fuse from 'fuse.js';
 
@@ -86,6 +95,12 @@ class Search extends React.Component {
                 { props.searches.map((term) => <RecentItem key={term} term={term} />) }
             </View>
 
+        const ListOrRecent = () => {
+            if (this.state.results.length > 0) return <CardList cards={this.state.results} callback={this.addSearch.bind(this) }/>
+            if (this.state.results.length == 0 && this.state.recent) return <RecentSearches searches={this.state.recent} />
+            return null;
+        }
+
         return (
             <View>
                 <View style={styles.searchheader}>
@@ -94,18 +109,20 @@ class Search extends React.Component {
                         style={styles.input}
                         placeholder="Search cards"
                         clearButtonMode='always'
+                        underlineColorAndroid='transparent'
                         autoFocus
                         onChangeText={this.handleSearch}
                         value={this.state.query}
                     />
-                    <Button style={{ flex: 1 }} color='white' title="Done" onPress={()=> { this.props.navigation.goBack() }} />
+                    <Button 
+                        style={{ flex: 1 }}
+                        color={Platform.OS === 'ios' ? 'white' : Colors.primaryShade}
+                        title="Done"
+                        onPress={()=> { this.props.navigation.goBack() }}
+                    />
                 </View>
                 <ScrollView keyboardShouldPersistTaps='always'>
-                    { this.state.results.length > 0 && (<CardList cards={this.state.results} callback={this.addSearch.bind(this) }/>)}
-                    { this.state.results.length == 0 
-                        && this.state.recent 
-                        && (<RecentSearches searches={this.state.recent} />)
-                    }
+                    <ListOrRecent />
                 </ScrollView>
             </View>
         );

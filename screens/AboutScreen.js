@@ -31,9 +31,9 @@ class About extends React.Component {
       using the cards and as digital and mobile technology became more ubiquitous, Michelle
       transitioned the cards to several mobile platforms so that she could share them with the
       greater EM community.</Text>
-      <Text style={styles.p}> What began as a handful of personal notes, are now a key
+        <Text style={styles.p}> What began as a handful of personal notes, are now a key
       FOAMed point-of-care resource.</Text>
-      <Text style={styles.p}>This app is the next iteration of that project.</Text>
+        <Text style={styles.p}>This app is the next iteration of that project.</Text>
       </ScrollView>
       </View>
     );

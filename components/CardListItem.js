@@ -14,7 +14,7 @@ const renderItem = (props) =>
     <View style={styles.sectionItemView}>
         <Text style={styles.sectionItem} key={props.index} >{props.card.title}</Text>
         <View style={styles.sectionTagsView}>
-        { props.card.categories.map(cat => <Text style={styles.tag} key={cat.slug}>{cat.name.toUpperCase()}</Text>)} }
+        { props.card.categories.map(cat => <Text style={styles.tag} key={cat.slug}>{cat.name.toUpperCase()}</Text>)}
         </View>
     </View>
   </TouchableOpacity>

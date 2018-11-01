@@ -39,6 +39,12 @@ class CardsSortScreen extends React.Component {
   }
 
   render() {
+
+    const CardListOrSectionList = () => {
+      if (this.state.selectedCategory == null) return <CardList cards={getSummaries()} />;
+      return <CardListSection sections={[{ title: this.state.selectedCategory.name, data: this.state.selectedCategory.cards }]}/>;
+    }
+
     return(
       <SafeAreaView style={{ flex: 1 }}>
         <FilterButton onPress={() => this.toggleModal()} />
@@ -47,10 +53,7 @@ class CardsSortScreen extends React.Component {
           closeModal={() => this.toggleModal()}
           onPress={(cat) => this.selectCategory(cat) }
         />
-        { this.state.selectedCategory == null && (<CardList cards={getSummaries()} />) }
-        { this.state.selectedCategory && (
-            <CardListSection sections={[{ title: this.state.selectedCategory.name, data: this.state.selectedCategory.cards }]}/>
-        )}
+        <CardListOrSectionList />
       </SafeAreaView>
     );
   }

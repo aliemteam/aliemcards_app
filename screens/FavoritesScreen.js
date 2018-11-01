@@ -25,14 +25,14 @@ class FavoritesScreen extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <View style={{ flex: 1 }}>
-      <FavsContext.Consumer>
-        {(context) => {
-          if (context.favs().length > 0 ) return <CardList cards={context.favs()}/>
-          return <NoFavs />
-        }}
-      </FavsContext.Consumer>
+        <FavsContext.Consumer>
+          {(context) => {
+            if (context.favs().length > 0) return <CardList cards={context.favs()}/>
+            return <NoFavs />
+          }}
+        </FavsContext.Consumer>
       </View>
     )
   }

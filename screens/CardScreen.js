@@ -1,44 +1,15 @@
 import React from 'react';
-import { 
-  ActionSheetIOS,
-  Button,
-  Clipboard,
-  Platform,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-  WebView
-} from 'react-native';
-import { Feather as Icon } from '@expo/vector-icons';
+import { Button, View, Platform,  WebView } from 'react-native';
 import marked from 'marked';
 
 import FavoriteButton from '../components/FavoriteButton';
+import ShareButton from '../components/ShareButton';
 import Colors from '../components/colors';
 import {css as CSS} from '../components/css';
 import { analyzeThis, regex } from '../components/utils';  
 import { getCard } from '../components/CardLibrary'
 
-const share = (card) => {
-  analyzeThis(`ShareButton:${card.slug}`);
-  if (Platform.OS === 'ios') {
-    ActionSheetIOS.showShareActionSheetWithOptions(
-      {
-        url: `https://www.aliemcards.com/cards/${card.slug}`,
-        message: `Check out this ALiEM Cards on ${card.title}`
-      },
-      () => alert('An error occurred trying to share'),
-      () => console.log('share success')
-    );
-  } else {
-    Clipboard.setString(`https://www.aliemcards.com/cards/${card.slug}`);
-    ToastAndroid.show('Card web address copied to clipboard', ToastAndroid.SHORT);
-  }
-}
 
-const ShareButton = (props) =>
-  <TouchableOpacity onPress={() => share(props.card)}>
-    <Icon name="share" size={20} style={{ color: 'white', marginRight: 10}} />
-  </TouchableOpacity>
 
 class CardScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -55,7 +26,7 @@ class CardScreen extends React.Component {
       headerLeft: () => (
         <View>
           <Button
-            color='white'
+            color={ Platform.OS === 'ios' ? 'white' : Colors.primaryShade }
             title="Done"
             onPress={ () => { navigation.goBack() }}
           />
@@ -126,7 +97,7 @@ class CardScreen extends React.Component {
               ref="WebView"
               style={{ overflow: 'hidden', borderRadius: 5 }}
               source={{html: content, baseUrl: './'}}
-              scalesPageToFit={false}
+              scalesPageToFit={Platform.OS === 'ios' ? false: true}
               onShouldStartLoadWithRequest={(e) => this.onShouldStartLoadWithRequest(e)}
               onNavigationStateChange = {(e) => this.onShouldStartLoadWithRequest(e)}
             />
