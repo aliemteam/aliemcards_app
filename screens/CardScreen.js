@@ -76,6 +76,7 @@ class CardScreen extends React.Component {
         const url = this.props.navigation.getParam('url', null);
 
         const content = url ? url : `
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>${CSS}</style>
           <h1>${card.title}</h1>
           <div class="card__meta">

@@ -6,6 +6,10 @@ body {
   line-height: 1.5rem;
 }
 
+img {
+  width: 100%
+}
+
 h1 {
   background-color: ${Colors.lightGray};
   padding: 5px;
