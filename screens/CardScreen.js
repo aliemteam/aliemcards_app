@@ -98,7 +98,7 @@ class CardScreen extends React.Component {
               ref="WebView"
               style={{ overflow: 'hidden', borderRadius: 5 }}
               source={{html: content, baseUrl: './'}}
-              scalesPageToFit={Platform.OS === 'ios' ? false: true}
+              scalesPageToFit={true}
               onShouldStartLoadWithRequest={(e) => this.onShouldStartLoadWithRequest(e)}
               onNavigationStateChange = {(e) => this.onShouldStartLoadWithRequest(e)}
             />
