@@ -32,6 +32,8 @@ const fuse = new Fuse(getCards(), {
 
 
 class Search extends React.Component {    
+    static timer;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -50,8 +52,8 @@ class Search extends React.Component {
 
     async addSearch() {
         const recent = this.state.recent;
-        if (recent && recent.find((term) => term === this.state.query)) return;
-        recent.splice(0, 0, this.state.query);
+        if (recent && recent.find((term) => term === this.state.uiQuery)) return;
+        recent.splice(0, 0, this.state.uiQuery);
         const sliced = recent.slice(0,8);
         console.log('Saving...', sliced);
         const saved = await this.saveSearch(sliced);
@@ -72,8 +74,19 @@ class Search extends React.Component {
     }
 
     handleSearch = (query) => {
-        const results = fuse.search((query)).slice(0,8);
-        this.setState({ query, results });
+        clearTimeout(Search.timer);
+        // Query is being performed. Update `uiQuery` immediately, but throttle
+        // the actual search 500ms.
+        if (query !== '') {
+            Search.timer = setTimeout(() => {
+                const results = fuse.search((query)).slice(0,8);
+                this.setState({ results });
+            }, 500);
+            this.setState({ uiQuery: query });
+        } else {
+            // Query is empty. Reset state.
+            this.setState({ uiQuery: query });
+        }
     }
 
     async componentDidMount() {
@@ -112,7 +125,7 @@ class Search extends React.Component {
                         underlineColorAndroid='transparent'
                         autoFocus
                         onChangeText={this.handleSearch}
-                        value={this.state.query}
+                        value={this.state.uiQuery}
                     />
                     <Button 
                         style={{ flex: 1 }}

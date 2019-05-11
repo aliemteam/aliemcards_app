@@ -60,6 +60,7 @@ h1 {
   margin-bottom: 20px
 }
 
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -67,7 +68,7 @@ table {
   margin: auto;
   margin-bottom: 1.5em;
   border: 0;
-  box-shadow: ${Colors.shadow};
+  box-shadow: ${Colors.shadow};  
 }
 
 thead>tr>td,
@@ -106,5 +107,48 @@ tfoot td {
 tfoot p {
   margin: 10px 0 !important // @stylint ignore
   line-height: 1.5em
+}
+
+// https://codepen.io/dbushell/pen/wGaamR
+table {
+  vertical-align: top;
+  max-width: 100vw;
+  overflow-x: auto;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th {
+  text-align: left;
+}
+
+thead {
+  display: flex;
+  width: 100;
+}
+
+tbody {
+  display: flex;
+  flex-shrink: 4;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+tr {
+  display: flex;
+  flex-direction: column;
+  min-width: min-content;
+  flex-shrink: 0;
+}
+
+td,
+th {
+  display: block;
 }
 `
