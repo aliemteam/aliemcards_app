@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "util:mediaDownload": "node ./utilities/mediaDownloader.js"
+    "util:mediaDownload": "node ./utilities/mediaDownloader.js",
+    "build": "expo build:ios"
   },
   "dependencies": {
     "expo": "^30.0.1",
